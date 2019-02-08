@@ -32,6 +32,20 @@ func (node Node) equal(other Node) bool {
 		node.number == other.number
 }
 
+func (node Node) toGraphviz() string {
+
+	result := fmt.Sprintf("\"%s\"\n", node.name)
+
+	for _, other := range node.provides {
+		result += fmt.Sprintf(
+			"\"%s\" -> \"%s\"\n",
+			node.name,
+			other.name)
+	}
+
+	return result
+}
+
 func addRequire(left, right *Node) {
 
 	for _, v := range left.requires {

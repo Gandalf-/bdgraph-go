@@ -1,8 +1,16 @@
 package bdgraph
 
+import (
+	"fmt"
+)
+
 type Option struct {
 	name  string
 	color string
+}
+
+func (option Option) show() {
+	fmt.Printf("  %-15s - %s\n", option.name, option.color)
 }
 
 var OptionCleanup Option = Option{

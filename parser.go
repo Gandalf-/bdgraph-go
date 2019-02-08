@@ -7,18 +7,7 @@ import (
 	"strings"
 )
 
-type Graph struct {
-	nodes   map[int]*Node
-	options []*Option
-}
-
-func (graph Graph) show() {
-	fmt.Println("nodes")
-	for _, node := range graph.nodes {
-		node.show()
-	}
-	fmt.Println("options")
-}
+type Nodes map[int]*Node
 
 type Position int
 
@@ -30,7 +19,7 @@ const (
 
 func ParseFile(lines []string) (Graph, error) {
 
-	nodes := map[int]*Node{}
+	nodes := Nodes{}
 	options := []*Option{}
 	position := Declaration
 
@@ -64,8 +53,8 @@ func ParseFile(lines []string) (Graph, error) {
 			if err != nil {
 				return Graph{}, err
 			}
-			for _, opt := range new_options {
-				options = append(options, &opt)
+			for i := range new_options {
+				options = append(options, &new_options[i])
 			}
 
 		case Dependency:
@@ -139,7 +128,7 @@ func ParseOption(line string) ([]Option, error) {
 	return options, nil
 }
 
-func ParseDependency(line string, nodes map[int]*Node) error {
+func ParseDependency(line string, nodes Nodes) error {
 
 	require := false
 	provide := false
